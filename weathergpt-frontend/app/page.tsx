@@ -32,7 +32,9 @@ const RiskMap = dynamic(() => import("./components/RiskMap"), {
     </div>
   ),
 });
-
+const BACKEND_URL =
+  process.env.NEXT_PUBLIC_BACKEND_URL || "https://weathergpt-backend-mo9e.onrender.com";
+  
 // Browser Web Speech API declarations for TypeScript
 declare global {
   interface Window {
@@ -150,7 +152,7 @@ export default function WeatherDashboard() {
   useEffect(() => {
     async function fetchInitialTelemetry() {
       try {
-        const res = await fetch("http://127.0.0.1:8000/api/telemetry?location=Kolkata");
+        const res = await fetch(`${BACKEND_URL}/api/telemetry?location=Kolkata`);
         if (res.ok) {
           const data = await res.json();
           const assessment = data.assessment;
@@ -199,16 +201,12 @@ export default function WeatherDashboard() {
     setLoading(true);
 
     try {
-      const res = await fetch("http://127.0.0.1:8000/api/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          message: userText,
-          latitude: telemetry.lat,
-          longitude: telemetry.lon,
-          persona: activePersona,
-        }),
-      });
+      const res = await fetch(`${BACKEND_URL}/api/chat`, {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({ query: input, persona: activePersona }),
+});
+       
 
       if (!res.ok) throw new Error(`HTTP Error ${res.status}`);
       const data = await res.json();
