@@ -52,16 +52,25 @@ class TelemetryData(BaseModel):
     location: str
     latitude: float
     longitude: float
+    # Support both naming conventions
+    temp: float
     temperature: float
     humidity: int
+    wind: float
     wind_speed: float
+    precip: float
     precipitation: float
     risk_level: str
     status_label: str
 
 class ChatResponse(BaseModel):
+    # Support both message, response, and reply
     response: str
+    message: str
+    reply: str
     telemetry: TelemetryData
+
+
 
 # Helper 1: Dynamic Geocoding
 async def get_coordinates(location_name: str) -> Dict[str, Any]:
@@ -131,9 +140,12 @@ async def fetch_weather_telemetry(lat: float, lon: float, location_label: str) -
         location=location_label,
         latitude=lat,
         longitude=lon,
+        temp=temp,
         temperature=temp,
         humidity=hum,
+        wind=wind,
         wind_speed=wind,
+        precip=precip,
         precipitation=precip,
         risk_level=risk_level,
         status_label=status_label
@@ -233,7 +245,12 @@ async def chat_advisory(payload: ChatRequest):
     else:
         llm_text = heuristic_fallback(persona_key, telemetry)
 
-    return ChatResponse(response=llm_text, telemetry=telemetry)
+    return ChatResponse(
+        response=llm_text,
+        message=llm_text,
+        reply=llm_text,
+        telemetry=telemetry
+    )
 
 if __name__ == "__main__":
     import uvicorn
