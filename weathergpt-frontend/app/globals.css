@@ -24,3 +24,11 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+/* Windy-Style Dark Theme Basemap & Radar Glow */
+.windy-dark-tiles {
+  filter: invert(100%) hue-rotate(180deg) brightness(90%) contrast(120%) !important;
+}
+
+.leaflet-container {
+  background-color: #080c14 !important;
+}

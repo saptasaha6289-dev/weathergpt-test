@@ -1,0 +1,24 @@
+{
+  "expo": {
+    "name": "MausamSetu",
+    "slug": "mausamsetu",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "dark",
+    "splash": {
+      "backgroundColor": "#030a16",
+      "resizeMode": "contain"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#030a16"
+      },
+      "package": "com.atmostiq.mausamsetu"
+    },
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.atmostiq.mausamsetu"
+    }
+  }
+}
